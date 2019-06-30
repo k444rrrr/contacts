@@ -102,3 +102,19 @@ bundle exec rake db:create_migration NAME=create_contacts
 # migrateを実行してDB/テーブルを作成
 bundle exec rake db:migrate
 
+# sqlite3でのDB接続
+sqllite3 contacts.sqlite3 # sqlite3コマンドでDBファイルを指定して接続
+
+ActiveRecord
+CRUD ActiveRecordのメソッド
+C    find,all #allだと全件
+R    create -> save
+U    update -> save
+D    destroy
+
+ActiveRecordを使うメリット
+DBのスキーマ定義をアプリケーションコードと一緒にgitで管理することができる。
+* 変更履歴をアプリケーションと一緒に追える
+* アプリケーションとDBを合わせて変更する必要がある場合一つのPullRequestにまとめられるので、
+  アプリケーションとDBの不整合を防ぐことが出来る
+* 複数人で開発する場合、全員が最新状態を参照できる
