@@ -4,6 +4,7 @@ require 'bundler'
 Bundler.require
 
 set :database, {adapter: "sqlite3", database: "contacts.sqlite3"}
+enable :sessions
 
 class Contact < ActiveRecord::Base
   validates_presence_of :name
@@ -12,6 +13,8 @@ end
 get '/' do
   @now = Time.now
   @contacts = Contact.all
+  #@message = session[:message]
+  @message = session.delete :message
   erb :index
 end
 
@@ -30,6 +33,7 @@ post '/contacts' do
   @contact = Contact.new({name: name})
   if @contact.save
     # true
+    session[:message] = "#{name}さんを作成しました"
     redirect '/'
   else
     # false
