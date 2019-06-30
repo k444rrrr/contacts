@@ -2,7 +2,6 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 get '/' do
-  now = Time.now
-  # "こんにちは: #{now}"
+  @now = Time.now
   erb :index
 end
