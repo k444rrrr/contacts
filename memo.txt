@@ -1,5 +1,30 @@
+-----------------
 section2
+-----------------
 
 # setup
 gem install -N sinatra
 gem install -N sinatra-reloader
+
+-----------------
+section3
+-----------------
+sinatraのディレクトリ
+* viewsディレクトリ … sinatraがテンプレート配置場所として認識してくれるので、erbテンプレートをここに配置するとrubyで読み込めるようになる
+* publicディレクトリ … sinatraが静的コンテンツ配置場所として認識してくれるので、cssなどの静的コンテンツを配置するとhtmlで参照できるようになる
+
+Fromタグ
+* action … このFormを実行すると呼び出されるaction(submitされると次はこのURLにhttpリクエストが飛ぶ)
+* method … action呼び出し時のhttpメソッド
+* input … inputの一つ一つがパラメータとなって渡る。name=がパラメータ名（key）で、valueは入力した値が渡る。typeは画面の入力方法。
+
+http
+* GETはページの読み取りリクエスト
+* POSTはデータをサーバに送信するリクエスト
+
+リダイレクト
+* リダイレクトとはサーバがクライアントに対して「こっちのページにアクセスし直して」という挙動
+* サーバはhttpステータス300番台とhttpヘッダにlocationヘッダを返してくる
+* クライアントはそれに従って、locationにアクセスし直す
+* chromeのデベロッパーツールでリクエストの流れを実際に確認するとわかりやすい
+
