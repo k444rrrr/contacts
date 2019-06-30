@@ -134,3 +134,23 @@ sinatraの場合、デフォルトではcookieに保存される。
 rack.sessonというcookieに入っているが、デコードされているのでそのままでは確認できない。
 decode.rbでdecodeすると確認できる。
 
+
+irb
+irb -r rubyファイル名で、指定したファイルを読み込んでirbが起動できる
+
+# 連絡先の全件取得
+Contact.all
+
+# 連絡先の1件取得
+Contact.find(1) # 1はid
+
+# 連絡先の削除
+c = Contact.find(1) #Contactクラスのクラスメソッドfindを呼び出して返ってきたインスタンスをcに入れる
+c.destroy #インスタンスメソッドdestroyを呼び出して削除
+
+# 連絡先全件削除
+Contact.destroy_all
+
+# 連絡先を1件追加
+Contact.create(name: "さいしょ")
+
