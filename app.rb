@@ -3,6 +3,8 @@ require 'bundler'
 
 Bundler.require
 
+set :database, {adapter: "sqlite3", database: "contacts.sqlite3"}
+
 get '/' do
   @now = Time.now
   erb :index
