@@ -154,3 +154,45 @@ Contact.destroy_all
 # 連絡先を1件追加
 Contact.create(name: "さいしょ")
 
+
+-----------------
+section6
+-----------------
+# migrateファイル(DBとテーブルを作成するための定義)の雛形を作成
+bundle exec rake db:create_migration NAME=add_email_to_contscts
+
+# 作成したmigrateファイルに下記の通りカラムの定義を追加
+    add_column :contacts, :email, :string
+
+# migrateを実行してDB/テーブルを作成
+bundle exec rake db:migrate
+
+# migrateを実行してDB/テーブルを作成
+bundle exec rake db:rollback
+
+
+emailのvalidationを追加して、画面からではなくirbで確認できる
+# validationの追加はapp.rbで
+  validates_presence_of :email
+
+# 動作確認のためirb起動
+irb -r ./app.rb
+
+# 引数なしでcreateするとエラーになるはずなので実行すると、失敗してrollbackしていることはわかるが、
+# validationのエラーメッセージは出ない
+2.6.3 :002 > Contact.create
+D, [2019-06-30T14:01:27.467483 #14500] DEBUG -- :    (0.1ms)  begin transaction
+D, [2019-06-30T14:01:27.474604 #14500] DEBUG -- :    (0.1ms)  rollback transaction
+ => #<Contact id: nil, name: nil, email: nil> 
+2.6.3 :003 > 
+
+# create!メソッドで詳細なエラーが確認できる。想定どおりエラーで弾かれていることがわかる
+2.6.3 :003 > Contact.create!
+D, [2019-06-30T14:03:33.237516 #14500] DEBUG -- :    (0.1ms)  begin transaction
+D, [2019-06-30T14:03:33.239241 #14500] DEBUG -- :    (0.0ms)  rollback transaction
+Traceback (most recent call last):
+       16: from /home/ec2-user/.rvm/rubies/ruby-2.6.3/lib/ruby/gems/2.6.0/gems/irb-1.0.0/exe/irb:11:in `<top (required)>'
+  (stack traceは省略)
+        1: from /home/ec2-user/environment/udemy/understand_rails_by_sinatra/contacts/vendor/bundle/ruby/2.6.0/gems/activerecord-5.2.3/lib/active_record/validations.rb:80:in `raise_validation_error'
+ActiveRecord::RecordInvalid (Validation failed: Name can't be blank, Email can't be blank)
+

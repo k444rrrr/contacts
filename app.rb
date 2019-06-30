@@ -8,6 +8,7 @@ enable :sessions
 
 class Contact < ActiveRecord::Base
   validates_presence_of :name
+  validates_presence_of :email
 end
 
 get '/' do
@@ -28,9 +29,10 @@ post '/contacts' do
   p params
 
   name = params[:name]
+  email = params[:email]
 
   # DBに保存
-  @contact = Contact.new({name: name})
+  @contact = Contact.new({name: name, email: email})
   if @contact.save
     # true
     session[:message] = "#{name}さんを作成しました"
